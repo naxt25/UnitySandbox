@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 234489527}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -856,7 +856,7 @@ MonoBehaviour:
   rb: {fileID: 1962331324}
   forwardForce: 1000
   sidewaysForce: 600
-  jumplock: 0
+  JumpLockFlag: 1
 --- !u!1 &2036606174
 GameObject:
   m_ObjectHideFlags: 0
