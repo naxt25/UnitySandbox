@@ -8,6 +8,11 @@ public class PlayerMovement : MonoBehaviour
     public float forwardForce = 2000f;
     public float sidewaysForce = 500f;
 
+    public bool jumplock;
+    void Start()
+    {
+        jumplock = false;
+    }
  // FixedUpdate used in Unity for physics.
     void FixedUpdate()
     {
@@ -31,13 +36,22 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey("s"))
         {
             rb.AddForce(0, 0, -forwardForce * Time.deltaTime);
+            jumplock = false;
         }
 
         if (Input.GetKey("space"))
         {
-            rb.AddForce(0, 50, 0);
+            if(jumplock == false)
+            {
+                rb.AddForce(0, 50, 0);
+                jumplock = true;
+            }
         }
 
+        void OnCollisionEnter(Collision col)
+        {
+            jumplock = false;
+        }
 
     }
 }
