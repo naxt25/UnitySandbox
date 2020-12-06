@@ -7,16 +7,26 @@ public class PlayerMovement : MonoBehaviour
 
     public float forwardForce = 2000f;
     public float sidewaysForce = 500f;
+    public bool jumpQueued = true;
+    public bool jumpLock = false;
 
-    public bool jumplock;
+   
     void Start()
     {
-        jumplock = false;
+        rb = GetComponent<Rigidbody>();
+    }
+
+    //Added and Update() -- it seems like Update has a much faster run time, so things will be caught faster in update. I imagine dense mathematics go in fixed update and quicker commands go in update. I think, lol.
+    void Update()
+    {
+        if(Input.GetButtonDown("Jump") && jumpLock == false)
+        {
+            jumpQueued = true;
+        }
     }
  // FixedUpdate used in Unity for physics.
     void FixedUpdate()
     {
-    
        
         if (Input.GetKey ("d"))
         {
@@ -36,22 +46,23 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey("s"))
         {
             rb.AddForce(0, 0, -forwardForce * Time.deltaTime);
-            jumplock = false;
         }
 
-        if (Input.GetKey("space"))
+        //able to call the 'Jump' variable because unity has default buttons
+        //in unity Edit -> Project Settings -> Input Manager
+        if (jumpQueued == true)
         {
-            if(jumplock == false)
-            {
-                rb.AddForce(0, 50, 0);
-                jumplock = true;
-            }
+            rb.AddForce(new Vector3(0, 7, 0), ForceMode.Impulse);
+            jumpQueued = false;
+            jumpLock = true;
         }
 
-        void OnCollisionEnter(Collision col)
-        {
-            jumplock = false;
-        }
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground")){
+            jumpLock = false;
+        }
     }
 }
