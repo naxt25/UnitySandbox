@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float forwardForce = 2000f;
     public float sidewaysForce = 500f;
-    public bool jumpQueued = true;
+    public bool jumpQueued = false;
     public bool jumpLock = false;
 
    
@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(new Vector3(0, 7, 0), ForceMode.Impulse);
             jumpQueued = false;
             jumpLock = true;
+            ScoreScript.scoreValue += 10;
         }
 
     }
