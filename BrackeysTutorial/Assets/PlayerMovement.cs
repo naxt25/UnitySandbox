@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float sidewaysForce = 500f;
     public bool jumpQueued = false;
     public bool jumpLock = false;
+    public bool doubleJumpLock = false; 
 
    
     void Start()
@@ -19,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     //Added and Update() -- it seems like Update has a much faster run time, so things will be caught faster in update. I imagine dense mathematics go in fixed update and quicker commands go in update. I think, lol.
     void Update()
     {
-        if(Input.GetButtonDown("Jump") && jumpLock == false)
+        if(Input.GetButtonDown("Jump") && (jumpLock == false || doubleJumpLock == false))
         {
             jumpQueued = true;
         }
@@ -50,12 +51,20 @@ public class PlayerMovement : MonoBehaviour
 
         //able to call the 'Jump' variable because unity has default buttons
         //in unity Edit -> Project Settings -> Input Manager
-        if (jumpQueued == true)
+        
+        if (jumpQueued == true && jumpLock == false) //If the players asked to jump, and they haven't jumped yet
         {
-            rb.AddForce(new Vector3(0, 7, 0), ForceMode.Impulse);
+            rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
             jumpQueued = false;
             jumpLock = true;
             ScoreScript.scoreValue += 10;
+        }
+        else if (jumpQueued == true && jumpLock == true && doubleJumpLock == false)//If the players asked to jump, and they have jumped once
+        {
+            rb.AddForce(new Vector3(0, 7, 0), ForceMode.Impulse);
+            jumpQueued = false;
+            doubleJumpLock = true;
+            ScoreScript.scoreValue += 15;
         }
 
     }
@@ -64,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground")){
             jumpLock = false;
+            doubleJumpLock = false;
         }
     }
 }
