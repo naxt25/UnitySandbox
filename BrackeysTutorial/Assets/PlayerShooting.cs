@@ -21,14 +21,10 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //float h = Input.GetAxisRaw("Horizontal") * moveForce;
-        //float v = Input.GetAxisRaw("Vertical") * moveForce;
-
-        //rb.velocity = new Vector3(h, v, 0);
 
         if(Input.GetMouseButtonDown(0))
         {
-            if(Time.time > shootRateTimeStamp)
+            if(Time.time > shootRateTimeStamp && PauseMenu.isPaused == false)
             {
                 GameObject go = (GameObject)Instantiate(
                     bullet, gun.position, gun.rotation);
