@@ -49,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(0, 0, -forwardForce * Time.deltaTime);
         }
 
+
+
         //able to call the 'Jump' variable because unity has default buttons
         //in unity Edit -> Project Settings -> Input Manager
         
@@ -57,14 +59,12 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
             jumpQueued = false;
             jumpLock = true;
-            ScoreScript.scoreValue += 10;
         }
-        else if (jumpQueued == true && jumpLock == true && doubleJumpLock == false)//If the players asked to jump, and they have jumped once
+        else if (jumpQueued == true && jumpLock == true && doubleJumpLock == false)//If the player tries to jump, and they have jumped once
         {
             rb.AddForce(new Vector3(0, 7, 0), ForceMode.Impulse);
             jumpQueued = false;
             doubleJumpLock = true;
-            ScoreScript.scoreValue += 15;
         }
 
     }
@@ -75,5 +75,6 @@ public class PlayerMovement : MonoBehaviour
             jumpLock = false;
             doubleJumpLock = false;
         }
+
     }
 }

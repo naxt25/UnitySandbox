@@ -32,5 +32,7 @@ public class PlayerShooting : MonoBehaviour
                 shootRateTimeStamp = Time.time + shootRate;
             }
         }
+
     }
+
 }

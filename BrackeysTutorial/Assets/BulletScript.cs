@@ -16,4 +16,15 @@ public class BulletScript : MonoBehaviour
     {
         
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Brick"))
+        {
+            ScoreScript.scoreValue += 10;
+            Destroy(gameObject);
+        }
+
+    }
+
 }
